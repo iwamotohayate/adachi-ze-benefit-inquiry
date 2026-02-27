@@ -8,20 +8,17 @@ export default function benefit({ benefitInfo,mode }) {
     return (
       <main className={`${styles.main}`}>
         <div className={`${styles.titel}`}>
-          <Text b size="26px" color="#565565">〇〇市</Text>
+          <Text b size="26px" color="#565565">足立区</Text>
         </div>
         <div className={`${styles.titel}`}>
-         <Text b size="26px" color="#565565">〇〇・✕✕・△△等</Text>
-        </div>
-        <div className={`${styles.titel}`}>
-         <Text b size="26px" color="#565565">価格高騰重点支援給付金</Text>
+         <Text b size="26px" color="#565565">あだち食料品等物価高支援給付金</Text>
         </div>
         <div className={`${styles.titel}`}>
          <Text b size="26px" color="#6a5acd" >【受付状況確認】</Text>
         </div>
         <Card css={{ mt: "36px", mw: "400px", bg: "aliceblue" }}>
           <Card.Header>
-            <Text b size="$xl" color="#565565">申請書番号：{benefitInfo.benefit_code}</Text>
+            <Text b size="$xl" color="#565565">お客様番号：{benefitInfo.benefit_code}</Text>
             {/* <Text b size="$xl" color="#565565">お問い合わせ番号：{benefitInfo.benefit_code}</Text> */}
           </Card.Header>
           <Card.Divider />
@@ -66,26 +63,23 @@ export default function benefit({ benefitInfo,mode }) {
     return(
       <main className={`${styles.main}`}>
         <div className={`${styles.titel}`}>
-          <Text b size="26px" color="#565565">〇〇市</Text>
+          <Text b size="26px" color="#565565">足立区</Text>
         </div>
         <div className={`${styles.titel}`}>
-         <Text b size="26px" color="#565565">〇〇・✕✕・△△等</Text>
-        </div>
-        <div className={`${styles.titel}`}>
-         <Text b size="26px" color="#565565">価格高騰重点支援給付金</Text>
+         <Text b size="26px" color="#565565">あだち食料品等物価高支援給付金</Text>
         </div>
         <div className={`${styles.titel}`}>
          <Text b size="26px" color="#6a5acd" >【受付状況確認】</Text>
         </div>
         <Card css={{mt: "36px", mw: "400px", bg: "aliceblue" }}>
           <Card.Header>
-            <Text b size="$xl" color="#565565">申請書番号：{benefitInfo.benefit_code}</Text>
+            <Text b size="$xl" color="#565565">お客様番号：{benefitInfo.benefit_code}</Text>
           </Card.Header>
           <Card.Divider />
           <Card.Body>
             <Text b size="$xl" color="#565565">対象の給付申請が見つかりませんでした。</Text>
             {/* <Text b size="$xl" color="#565565">再度番号をご確認の上、照会を行ってください。</Text> */}
-            <Text b size="$xl" color="#565565">申請書番号をご確認の上、照会を行ってください。</Text>
+            <Text b size="$xl" color="#565565">お客様番号をご確認の上、照会を行ってください。</Text>
           </Card.Body>
           <Card.Footer>
           <Row justify="flex-end">
@@ -158,121 +152,144 @@ export const getServerSideProps = async (context) => {
   const res = await searchBenefit(benefitcode);
   if (res.Item) {
     if (res.Item.status === "未処理") {
-      res.Item.message1 = "〇〇市にてお振込みの準備をしております。"
-      res.Item.message2 = "お振込みまで、概ね2週間のお時間をいただいています。"
-      res.Item.message3 = "しばらくお待ちください。"
+      res.Item.message1 = "ご申請をいただいておりません。"
+      res.Item.message2 = "申請期限は令和８年６月３０日（火）（郵送の場合は当日消印有効）となります。"
+      res.Item.message3 = "期限までに申請がない場合、支給できませんのでご注意ください。"
       // 入金予定日・入金日を表示しない
       res.Item.transfer_scheduled_date = ""
       res.Item.transfer_date = ""
     }
     if (res.Item.status === "不着") {
-      res.Item.message1 = "コールセンター（XXX-XXX-XXX）にご連絡ください。"
-      res.Item.message2 = ""
-      res.Item.message3 = ""
+      res.Item.message1 = "住民票上のご住所に郵送いたしましたが、あて所なしとして返戻されました。"
+      res.Item.message2 = "あだち食料品等物価高支援給付金ダイヤル（０１２０）６３６-０３９（フリーダイヤル）までご連絡下さい。"
+      res.Item.message3 = "受付時間：平日の午前９時から午後８時まで"
       // 入金予定日・入金日を表示しない
       res.Item.transfer_scheduled_date = ""
       res.Item.transfer_date = ""
     }
     if (res.Item.status === "受付済") {
-      res.Item.message1 = "〇〇市にてお振込みの手続き中です。"
-      res.Item.message2 = "お振込みまで、概ね2週間のお時間をいただいています。"
-      res.Item.message3 = "しばらくお待ちください。"
+      res.Item.message1 = "申請内容について審査中です。"
+      res.Item.message2 = "暫くお待ちください。"
+      res.Item.message3 = ""
       // 入金予定日・入金日を表示しない
       res.Item.transfer_scheduled_date = ""
       res.Item.transfer_date = ""
     }
     if (res.Item.status === "内容確認中") {
-        res.Item.message1 = "〇〇市にてお振込みの手続き中です。"
-        res.Item.message2 = "お振込みまで、概ね2週間のお時間をいただいています。"
-        res.Item.message3 = "しばらくお待ちください。"
+        res.Item.message1 = "申請内容について審査中です。"
+        res.Item.message2 = "暫くお待ちください。"
+        res.Item.message3 = ""
         // 入金予定日・入金日を表示しない
         res.Item.transfer_scheduled_date = ""
         res.Item.transfer_date = ""
       }
       if (res.Item.status === "不備連絡中") {
-          res.Item.message1 = "〇〇市にて手続きを進めておりますが、お送りいただいた内容に不備がございます。"
-          res.Item.message2 = "コールセンター（XXX-XXX-XXX）にご連絡ください。"
-          res.Item.message3 = ""
+          res.Item.message1 = "申請内容に不備がございました。不備についてのご連絡がない場合は、以下コールセンターまでお問い合わせください。"
+          res.Item.message2 = "あだち食料品等物価高支援給付金ダイヤル（０１２０）６３６-０３９（フリーダイヤル）までご連絡下さい。"
+          res.Item.message3 = "受付時間：平日の午前９時から午後８時まで"
           // 入金予定日・入金日を表示しない
           res.Item.transfer_scheduled_date = ""
           res.Item.transfer_date = ""
         }
         if (res.Item.status === "承認待ち") {
-          res.Item.message1 = "〇〇市にてお振込みの手続き中です。"
-          res.Item.message2 = "お振込みまで、概ね2週間のお時間をいただいています。"
-          res.Item.message3 = "しばらくお待ちください。"
+          res.Item.message1 = "申請内容について審査中です。"
+          res.Item.message2 = "暫くお待ちください。"
+          res.Item.message3 = ""
           // 入金予定日・入金日を表示しない
           res.Item.transfer_scheduled_date = ""
           res.Item.transfer_date = ""
         }
         if (res.Item.status === "不支給承認待ち") {
-          res.Item.message1 = "コールセンター（XXX-XXX-XXX）にご連絡ください。"
-          res.Item.message2 = ""
+          res.Item.message1 = "申請内容について審査中です。"
+          res.Item.message2 = "暫くお待ちください。"
           res.Item.message3 = ""
           // 入金予定日・入金日を表示しない
           res.Item.transfer_scheduled_date = ""
           res.Item.transfer_date = ""
         }
         if (res.Item.status === "入金作成待ち") {
-          res.Item.message1 = "〇〇市にてお振込みの手続き中です。"
-          res.Item.message2 = "お振込みまで、概ね2週間のお時間をいただいています。"
-          res.Item.message3 = "しばらくお待ちください。"
-          // 入金予定日・入金日を表示しない
-          res.Item.transfer_scheduled_date = ""
-          res.Item.transfer_date = ""
-        }
-        if (res.Item.status === "入金エラー") {
-          res.Item.message1 = "〇〇市にてお振込みいたしましたが、ご指定の口座にお振込みできませんでした。"
-          res.Item.message2 = "コールセンター（XXX-XXX-XXX）にご連絡ください。"
+          res.Item.message1 = "申請内容について審査中です。"
+          res.Item.message2 = "暫くお待ちください。"
           res.Item.message3 = ""
           // 入金予定日・入金日を表示しない
           res.Item.transfer_scheduled_date = ""
           res.Item.transfer_date = ""
         }
+        if (res.Item.status === "入金エラー") {
+          if(res.Item.receipt_atm === "true"){
+            res.Item.message1 = "セブン銀行ATMからお受取り出来る期限が過ぎています。再度受取番号通知を発行が必要となるので、以下コールセンターまでお問い合わせください。"
+            res.Item.message2 = "あだち食料品等物価高支援給付金ダイヤル（０１２０）６３６-０３９（フリーダイヤル）までご連絡下さい。"
+            res.Item.message3 = "受付時間：平日の午前９時から午後８時まで"
+            // 入金予定日・入金日を表示しない
+            res.Item.transfer_scheduled_date = ""
+            res.Item.transfer_date = ""
+          }else{
+            res.Item.message1 = "ご指定の口座にお振込みできませんでした。不備についてのご連絡がない場合は、以下コールセンターまでお問い合わせください。"
+            res.Item.message2 = "あだち食料品等物価高支援給付金ダイヤル（０１２０）６３６-０３９（フリーダイヤル）までご連絡下さい。"
+            res.Item.message3 = "受付時間：平日の午前９時から午後８時まで"
+            // 入金予定日・入金日を表示しない
+            res.Item.transfer_scheduled_date = ""
+            res.Item.transfer_date = ""
+          }
+          
+        }
         if (res.Item.status === "入金作成済み") {
-          res.Item.message1 = "〇〇市にてお振込みの準備ができました。"
-        res.Item.message2 = "お振込み日以降にご指定いただいた口座をご確認ください。"
-        res.Item.message3 = ""
-        // 入金日を表示しない
-        res.Item.transfer_date = ""
+          res.Item.message1 = "給付の準備ができました。"
+          res.Item.message2 = "オンライン申請の方は、ご登録のメールアドレス宛に郵送申請の方は、圧着はがきでご案内が届きます。"
+          res.Item.message3 = "ご確認ください。"
+          // 入金予定日・入金日を表示しない
+          res.Item.transfer_scheduled_date = ""
+          res.Item.transfer_date = ""
       }
       if (res.Item.status === "決定通知済み") {
-        res.Item.message1 = "〇〇市にてお振込みの準備ができました。"
-        res.Item.message2 = "お振込み日以降にご指定いただいた口座をご確認ください。"
+        res.Item.message1 = ""
+        res.Item.message2 = ""
         res.Item.message3 = ""
-        // 入金日を表示しない
+        // 入金予定日・入金日を表示しない
+        res.Item.transfer_scheduled_date = ""
         res.Item.transfer_date = ""
       }
       if (res.Item.status === "キャンセル") {
-        res.Item.message1 = "コールセンター（XXX-XXX-XXX）にご連絡ください。"
-        res.Item.message2 = ""
+        res.Item.message1 = "あだち食料品等物価高支援給付金ダイヤル（０１２０）６３６-０３９（フリーダイヤル）までご連絡下さい。"
+        res.Item.message2 = "受付時間：平日の午前９時から午後８時まで"
         res.Item.message3 = ""
         // 入金予定日・入金日を表示しない
         res.Item.transfer_scheduled_date = ""
         res.Item.transfer_date = ""
       }
       if (res.Item.status === "不支給") {
-        res.Item.message1 = "コールセンター（XXX-XXX-XXX）にご連絡ください。"
-        res.Item.message2 = ""
-        res.Item.message3 = ""
+        res.Item.message1 = "審査の結果、支給要件に該当しませんでした。または、受給辞退を受付ました。"
+        res.Item.message2 = "ご不明点等ございましたら、あだち食料品等物価高支援給付金ダイヤル（０１２０）６３６-０３９（フリーダイヤル）までご連絡下さい。"
+        res.Item.message3 = "受付時間：平日の午前９時から午後８時まで"
         // 入金予定日・入金日を表示しない
         res.Item.transfer_scheduled_date = ""
         res.Item.transfer_date = ""
       }
       if (res.Item.status === "不支給完了") {
-        res.Item.message1 = "コールセンター（XXX-XXX-XXX）にご連絡ください。"
-        res.Item.message2 = ""
-        res.Item.message3 = ""
+        res.Item.message1 = "審査の結果、支給要件に該当しませんでした。または、受給辞退を受付ました。"
+        res.Item.message2 = "ご不明点等ございましたら、あだち食料品等物価高支援給付金ダイヤル（０１２０）６３６-０３９（フリーダイヤル）までご連絡下さい。"
+        res.Item.message3 = "受付時間：平日の午前９時から午後８時まで"
         // 入金予定日・入金日を表示しない
         res.Item.transfer_scheduled_date = ""
         res.Item.transfer_date = ""
       }
       if (res.Item.status === "入金完了") {
-        res.Item.message1 = "〇〇市にてお振込みいたしました。"
-        res.Item.message2 = "ご指定いただいた口座をご確認ください。"
-        res.Item.message3 = ""
-        // 入金予定日を表示しない
-        res.Item.transfer_scheduled_date = ""
+        if(res.Item.receipt_atm === "true"){
+          res.Item.message1 = "セブン銀行ATMよりお引き出しいただきありがとうございました。"
+          res.Item.message2 = "ご不明点等ございましたら、あだち食料品等物価高支援給付金ダイヤル（０１２０）６３６-０３９（フリーダイヤル）までご連絡下さい。"
+          res.Item.message3 = "受付時間：平日の午前９時から午後８時まで"
+          // 入金予定日・入金日を表示しない
+          res.Item.transfer_scheduled_date = ""
+          res.Item.transfer_date = ""
+        }else{
+          res.Item.message1 = "お振込みいたしました。"
+          res.Item.message2 = "ご不明点等ございましたら、あだち食料品等物価高支援給付金ダイヤル（０１２０）６３６-０３９（フリーダイヤル）までご連絡下さい。"
+          res.Item.message3 = "受付時間：平日の午前９時から午後８時まで"
+          // 入金予定日・入金日を表示しない
+          res.Item.transfer_scheduled_date = ""
+          res.Item.transfer_date = ""
+        }
+        
       }
       //ステータスにかかわらず緊急停止ONの場合優先される
       // if(res.Item.emergency_stop === "true"){

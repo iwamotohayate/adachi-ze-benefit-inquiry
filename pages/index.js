@@ -12,26 +12,23 @@ export default function Home({ }) {
   return (
     <main className={`${styles.main}`}>
         <div className={`${styles.titel}`}>
-          <Text b size="26px" color="#565565">〇〇市</Text>
+          <Text b size="26px" color="#565565">足立区</Text>
         </div>
         <div className={`${styles.titel}`}>
-         <Text b size="26px" color="#565565">〇〇・✕✕・△△等</Text>
-        </div>
-        <div className={`${styles.titel}`}>
-         <Text b size="26px" color="#565565">価格高騰重点支援給付金</Text>
+         <Text b size="26px" color="#565565">あだち食料品等物価高支援給付金</Text>
         </div>
         <div className={`${styles.titel}`}>
          <Text b size="26px" color="#6a5acd" >【受付状況確認】</Text>
         </div>
       <Card css={{ mt: "36px", mw: "400px", bg: "aliceblue" }}>
         <Card.Body>
-          <Text b size="18px" color="#565565">申請書番号（15桁・半角）を入力し</Text>
+          <Text b size="18px" color="#565565">お客様番号（10桁・半角）を入力し</Text>
           <Text b size="18px" color="#565565">「照会」ボタンをクリックして下さい。</Text>
           <div className={styles.search}>
             <Input
               clearable
               underlined
-              labelPlaceholder="申請書番号"
+              labelPlaceholder="お客様番号"
               initialValue=""
               onChange={
                 (e) => setBenefitCode(e.target.value)
@@ -42,7 +39,7 @@ export default function Home({ }) {
                 setIsFinding(true);
                 router.push({pathname:'/benefit', query: {benefitcode :benefitCode,mode:1}});
               }}
-              disabled={isFinding || benefitCode.length !== 15}
+              disabled={isFinding || benefitCode.length !== 10}
             >
               <Text color="currentColor" css={{ d: isFinding ? "none" : "block" }}>照会</Text>
               <Loading color="currentColor" size="sm" css={{ d: isFinding ? "block" : "none" }}/>
