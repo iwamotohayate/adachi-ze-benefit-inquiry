@@ -45,6 +45,8 @@ export default function Home({ }) {
               <Loading color="currentColor" size="sm" css={{ d: isFinding ? "block" : "none" }}/>
             </Button>
           </div>
+          <br/>
+            <Text b css={{ pl: "8px"}} size="18px" color="#e01919"> ※申請後、処理状況の反映までにお時間がかかります。</Text>
         </Card.Body>
       </Card>
     </main>

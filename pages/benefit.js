@@ -27,7 +27,9 @@ export default function benefit({ benefitInfo,mode }) {
             <Text b css={{ pl: "8px"}} size="$xl" color="#565565"> {benefitInfo.message1}</Text>
             <Text b css={{ pl: "8px"}} size="$xl" color="#565565"> {benefitInfo.message2}</Text>
             <Text b css={{ pl: "8px"}} size="$xl" color="#565565"> {benefitInfo.message3}</Text>
-            <Text b css={{ pl: "8px"}} size="$xl" color="#1a0dab"><a href={benefitInfo.link} target="_blank" rel="noopener noreferrer">{benefitInfo.message4}</a></Text>
+            {/* <Text b css={{ pl: "8px"}} size="$xl" color="#1a0dab"><a href={benefitInfo.link} target="_blank" rel="noopener noreferrer">{benefitInfo.message4}</a></Text> */}
+            {/* <br/>
+            <Text b css={{ pl: "8px"}} size="$xl" color="#e01919"> ※申請後、処理状況の反映までにお時間がかかります。</Text> */}
            
             <Text b css={{ mt: "16px", pl: "8px", py: "4px", bc: "limegreen", color: "white", br: "5px" }} size="$xl"
               style={{ display:benefitInfo.transfer_scheduled_date!=undefined && benefitInfo.transfer_scheduled_date !="" ? "" : "none" }}
